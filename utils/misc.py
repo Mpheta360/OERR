@@ -139,13 +139,13 @@ def update_patient(patient_id):
         f"Failed to retrieve documents: {response.status_code} - {response.text}"
 
 def get_teams_units_department_ward(all_departments, ward_selected):
-        for department in all_departments["departments"]:
-            if ward_selected in department["wards"]:
-                if not department.get("teams"):
-                    department["teams"] = []
-                if not department.get("units"):
-                    department["units"] = []
-                if not department.get("wards"):
-                    department["wards"] = []
-                return department["teams"], department["units"], department["name"], department["wards"], ward_selected
-        return None, None, None, None, None
+    for department in all_departments.get("departments", []):
+        if ward_selected in department.get("wards", []):
+            return (
+                department.get("teams"),
+                department.get("units"),
+                department.get("name"),
+                department.get("wards"),
+                ward_selected
+            )
+    return None, None, None, None, None

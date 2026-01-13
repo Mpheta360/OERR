@@ -340,7 +340,8 @@ def logout():
 @app.route("/users")
 def users():
     current_users = User.all()
-    qualifying_teams, qualifying_units, department, wards, ward = misc.get_teams_units_department_ward(app.config['departments'], session["location"])
+
+    qualifying_teams, qualifying_units, department, all_wards, ward = misc.get_teams_units_department_ward(app.config['departments'], session["location"])
 
     return render_template(
         "user/index.html",
@@ -350,7 +351,7 @@ def users():
         teams=qualifying_teams,
         units=qualifying_units,
         department=department,
-        wards=wards,
+        all_wards=all_wards,
         ward=ward
     )
 
